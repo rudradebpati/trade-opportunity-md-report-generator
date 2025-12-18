@@ -11,6 +11,18 @@ class MarketAnalysis(BaseModel):
 
 async def analyze_with_llm(sector: str, market_data: str):
     # Combine user instruction with the scraped data
+    """
+    Analyze the Indian {sector} sector using Gemini 2.5 Flash.
+
+    Combine user instruction with the scraped market data to identify current trends, specific trade opportunities, and critical risks.
+
+    Args:
+        sector (str): The sector to analyze.
+        market_data (str): Scraped market data.
+
+    Returns:
+        str: JSON output with the analysis, following the MarketAnalysis schema.
+    """
     prompt = f"""
     Analyze the Indian {sector} sector.
     

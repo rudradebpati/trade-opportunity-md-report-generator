@@ -2,6 +2,20 @@ from duckduckgo_search import DDGS
 from datetime import datetime
 
 async def fetch_market_news(sector: str):
+    """
+    Fetches the latest market news for the given sector using the DuckDuckGo API.
+
+    Parameters:
+        sector (str): The sector to fetch the news for.
+
+    Returns:
+        str: The latest market news for the given sector, or
+            "No recent news found." if no news is available, or
+            "Market data temporarily unavailable." if there is an error while scraping.
+
+    Raises:
+        Exception: If there is an error while scraping the news.
+    """
     current_date= datetime.today()
     try:
         query = f"{sector} India market trends trade opportunities for {str(current_date.month)}, {str(current_date.year)}"
