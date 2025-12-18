@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-dotenv
+# httpx     # removed as DDGS blocking search
+duckduckgo-search
+slowapi
+pydantic
+python-jose
+google-genai
+python-dotenv
