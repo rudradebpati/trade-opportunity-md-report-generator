@@ -12,7 +12,7 @@ Trade Opportunities API is a RESTful API that provides market analysis by sector
 
    ```dotenv
    GEMINI_API_KEY=""
-   ACCESS_API_KEY="rudradeb12348765"
+   ACCESS_API_KEY=""
    ```
 
 4. Start the server by running `uvicorn app.main:app --reload`.
@@ -42,10 +42,6 @@ The API requires an API key for authentication. You can obtain a key by contacti
 ## Contributing
 
 Contributions are welcome!
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
 ## Contact
 
