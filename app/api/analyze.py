@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, HTTPException, status
 from app.security.auth import verify_api_key
 from app.security.rate_limiter import limiter
 from app.services.search_service import fetch_market_news
@@ -9,7 +9,7 @@ router = APIRouter()
 
 @router.get("/analyze/{sector}")
 @limiter.limit("5/minute")
-async def analyze_sector(sector: str, request:Request, api_key=Depends(verify_api_key)):
+async def analyze_sector(sector: str, request: Request, api_key=Depends(verify_api_key)):
     """
     Analyze the Indian {sector} sector using Gemini 2.5 Flash.
 
@@ -22,7 +22,19 @@ async def analyze_sector(sector: str, request:Request, api_key=Depends(verify_ap
     Returns:
         dict: A JSON object with the analysis, following the MarketAnalysis schema.
     """
-    market_data = await fetch_market_news(sector)
-    analysis = await analyze_with_llm(sector, market_data)
-    report = generate_markdown(sector, analysis)
-    return {"report": report}
+    try:
+        market_data = await fetch_market_news(sector)
+        analysis = await analyze_with_llm(sector, market_data)
+        report = generate_markdown(sector, analysis)
+        return {"report": report}
+    except HTTPException:
+        # Re-raise known HTTP exceptions (from auth, rate limiter, or AI service)
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail={
+                "error": "Internal Server Error",
+                "message": f"Failed to generate analysis: {str(e)}",
+            },
+        )
