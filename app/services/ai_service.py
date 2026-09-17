@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from google import genai
-from google.genai import types
+# from google.genai import types
 from app.services.system_prompt import get_system_prompt
 
 class MarketAnalysis(BaseModel):
@@ -38,7 +38,7 @@ async def analyze_with_llm(sector: str, market_data: str):
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=prompt,
-        config=types.GenerateContentConfig(
+        config=genai.types.GenerateContentConfig(
             system_instruction=get_system_prompt(),
             response_mime_type="application/json",
             response_schema=MarketAnalysis,
