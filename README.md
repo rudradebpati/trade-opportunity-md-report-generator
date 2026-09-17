@@ -37,7 +37,7 @@ The API will return a trade opportunity report in Markdown format. Here's an exa
 
 ## Security
 
-The API requires an API key for authentication. You can obtain a key by contacting the project maintainers.
+The API requires an API key for authentication. You can set a key in .env and use it.
 
 ## Contributing
 

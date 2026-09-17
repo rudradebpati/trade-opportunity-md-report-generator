@@ -7,4 +7,5 @@ slowapi
 pydantic
 python-jose
 google-genai
-python-dotenv
+# python-dotenv # Better alternative package is decouples
+python-decouple
