@@ -7,9 +7,9 @@ from app.utils.markdown import generate_markdown
 
 router = APIRouter()
 
-@router.get("/analyze/{sector}")
+@router.get("/analyze/{model}/{sector}")
 @limiter.limit("5/minute")
-async def analyze_sector(sector: str, request: Request, api_key=Depends(verify_api_key)):
+async def analyze_sector(sector: str, request: Request, model:str, api_key=Depends(verify_api_key)):
     """
     Analyze the Indian {sector} sector using Gemini 2.5 Flash.
 
@@ -24,7 +24,7 @@ async def analyze_sector(sector: str, request: Request, api_key=Depends(verify_a
     """
     try:
         market_data = await fetch_market_news(sector)
-        analysis = await analyze_with_llm(sector, market_data)
+        analysis = await analyze_with_llm(sector, market_data, model)
         report = generate_markdown(sector, analysis)
         return {"report": report}
     except HTTPException:

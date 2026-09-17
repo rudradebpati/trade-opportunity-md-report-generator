@@ -8,14 +8,14 @@ from decouple import config
 
 logger = logging.getLogger(__name__)
 GEMINI_API_KEY = config("GEMINI_API_KEY")
-
+# LLM_MODEL_NAME=config("LLM_MODEL_NAME")
 class MarketAnalysis(BaseModel):
     summary: str
     opportunities: list[str]
     risks: list[str]
     sentiment: str
 
-async def analyze_with_llm(sector: str, market_data: str):
+async def analyze_with_llm(sector: str, market_data: str, model:str):
     # Combine user instruction with the scraped data
     """
     Analyze the Indian {sector} sector using Gemini 2.5 Flash.
@@ -46,7 +46,7 @@ async def analyze_with_llm(sector: str, market_data: str):
 
         # Use 'response_schema' to enforce valid JSON output
         response = client.models.generate_content(
-            model="gemini-flash-latest",
+            model=model,
             contents=prompt,
             config=genai.types.GenerateContentConfig(
                 system_instruction=get_system_prompt(),
